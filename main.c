@@ -13,17 +13,6 @@ int main(int argc, char *argv[])
     SDL_Renderer *renderer;
     renderer = SDL_CreateRenderer(window, 0);
 
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // Bakgrundsfärg
-    SDL_RenderClear(renderer);
-
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Röd färg på spelblocken
-    renderPlayer1(renderer);
-    renderPlayer2(renderer);
-
-    renderBall(renderer);
-
-    SDL_RenderPresent(renderer); // Visa allt på skärmen. Typ som ecall.
-
     // SDL_SetWindowIcon();
     while (1)
     {
@@ -36,38 +25,35 @@ int main(int argc, char *argv[])
                 SDL_Quit();                // Stäng program
                 return 0;
             }
-            if (buttonPressed.type == SDL_EVENT_KEY_DOWN) // When key is pressed:
-            {
-                switch (buttonPressed.key.key)
-                {
-                    case SDLK_W:
-                    {
-                        movePlayer1(-5);
-                        // Move up. y--
-                        break;
-                    }
-                    case SDLK_S:
-                    {
-                        movePlayer1(5);
-                        // Move down. y++
-                        break;
-                    }
-                    default:
-                    {
-                    break;
-                    }
-                }
-            }
+        }
+        const bool *keystate = SDL_GetKeyboardState(NULL);      //Läsa in alla knapptryck "samtidigt". Så att båda spelarna kan röra sig samtidigt.
+        if (keystate[SDL_SCANCODE_W])
+        {
+            movePlayer1(-5); // Upp p1
+        }
+        if (keystate[SDL_SCANCODE_S])
+        {
+            movePlayer1(5); // Ner p1
+        }
+        if (keystate[SDL_SCANCODE_UP])
+        {
+            movePlayer2(-5); // Upp p2
+        }
+        if (keystate[SDL_SCANCODE_DOWN])
+        {
+            movePlayer2(5); // Ner p2
         }
 
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);   //set color to white 
-        SDL_RenderClear(renderer);                              //White background
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // set color to white
+        SDL_RenderClear(renderer);                            // White background
 
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);       //set color to red
-        renderPlayer1(renderer);                                //Red block
-        renderPlayer2(renderer);                                //Red block
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);         //set color to black    
-        renderBall(renderer);                                   //black ball
-        SDL_RenderPresent(renderer);                            //Present frame
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // set color to red
+        renderPlayer1(renderer);                          // Red block
+        renderPlayer2(renderer);                          // Red block
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);   // set color to black
+        renderBall(renderer);                             // black ball
+        SDL_RenderPresent(renderer);                      // Present frame
+
+        SDL_Delay(16); // Så att det inte går för snabbt
     }
 }

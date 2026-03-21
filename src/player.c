@@ -26,5 +26,14 @@ void movePlayer1(float dy)
 }
 void movePlayer2(float dy)
 {
-    
+    rectangle2.y += dy;
+
+    if (rectangle2.y < 0)
+    {
+        rectangle2.y = 0;
+    }
+    if (rectangle2.y > 800 - rectangle2.h) //Max - height för att stoppa att åka igenom.
+    {
+        rectangle2.y = 800 - rectangle2.h;
+    }
 }
