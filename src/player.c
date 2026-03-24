@@ -1,7 +1,12 @@
 #include <SDL3/SDL.h>
 
-SDL_FRect rectangle1 = {20, 300, 20, 200};
+SDL_FRect rectangle1 = {20, 300, 20, 200}; //h = 200
 SDL_FRect rectangle2 = {960, 300, 20, 200};
+
+float upperThird;
+float middleThird;
+float bottomThird;
+
 
 void renderPlayer1(SDL_Renderer * renderer) {
     SDL_RenderFillRect(renderer,&rectangle1);
@@ -13,6 +18,10 @@ void renderPlayer2(SDL_Renderer * renderer) {
 void movePlayer1(float dy)
 {
     rectangle1.y += dy;
+    
+    upperThird = rectangle1.h/3.0f;
+    middleThird = 2 * upperThird;
+    bottomThird = 3 * upperThird;
 
     if (rectangle1.y < 0)
     {

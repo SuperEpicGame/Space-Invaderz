@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     renderer = SDL_CreateRenderer(window, 0);
     // moveBallInit();
     int startCounter = 0;
-
+//I want to implement hitboxes on my rectangles. three areas, top, middle, bottom. With them having different effects depending on which one was hit by the ball. top will make the ball go up more (-y) and less -x and so on.
     // SDL_SetWindowIcon();
     while (1)
     {
@@ -49,13 +49,13 @@ int main(int argc, char *argv[])
 
         if (startCounter == 0)
         {
-            ballVelX = -2.0f;
-            ballVelY = 0.0f;
+            ballVelX = -5.0f;
+            ballVelY = 1.0f;
             startCounter = 1;
         }
         else
         {
-            moveBall(); // uses ballVelX / ballVelY
+            moveBall();
         }
         checkCollision();
 
