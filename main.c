@@ -3,6 +3,7 @@
 #include <SDL3/SDL_main.h>
 #include "src/player.h"
 #include "src/ball.h"
+#include "src/collision.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,6 +13,8 @@ int main(int argc, char *argv[])
     SDL_Event buttonPressed;
     SDL_Renderer *renderer;
     renderer = SDL_CreateRenderer(window, 0);
+    // moveBallInit();
+    int startCounter = 0;
 
     // SDL_SetWindowIcon();
     while (1)
@@ -26,7 +29,7 @@ int main(int argc, char *argv[])
                 return 0;
             }
         }
-        const bool *keystate = SDL_GetKeyboardState(NULL);      //Läsa in alla knapptryck "samtidigt". Så att båda spelarna kan röra sig samtidigt.
+        const bool *keystate = SDL_GetKeyboardState(NULL); // Läsa in alla knapptryck "samtidigt". Så att båda spelarna kan röra sig samtidigt.
         if (keystate[SDL_SCANCODE_W])
         {
             movePlayer1(-5); // Upp p1
@@ -43,6 +46,19 @@ int main(int argc, char *argv[])
         {
             movePlayer2(5); // Ner p2
         }
+
+        if (startCounter == 0)
+        {
+            ballVelX = -2.0f;
+            ballVelY = 0.0f;
+            startCounter = 1;
+        }
+        else
+        {
+            moveBall(); // uses ballVelX / ballVelY
+        }
+        checkCollision();
+
 
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // set color to white
         SDL_RenderClear(renderer);                            // White background

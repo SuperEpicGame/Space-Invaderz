@@ -3,7 +3,10 @@
 
 #include <SDL3/SDL.h>
 
-void renderBall(SDL_Renderer * renderer);
+extern SDL_FRect ball;
 
+void renderBall(SDL_Renderer * renderer);
+void moveBall();
+// void moveBallInit();
 
 #endif
